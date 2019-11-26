@@ -230,7 +230,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.yudianxx.TumoApplication</mainClass>
+                    <mainClass>cn.yudianxx.RainblogApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
