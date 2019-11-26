@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("cn.yudianxx.system.mapper")
-public class TumoApplication {
+public class RainblogApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TumoApplication.class, args);
+        SpringApplication.run(RainblogApplication.class, args);
     }
 }

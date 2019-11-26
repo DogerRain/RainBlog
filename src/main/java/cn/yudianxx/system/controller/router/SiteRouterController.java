@@ -72,7 +72,7 @@ public class SiteRouterController extends BaseController {
     }
 
     /**
-     * 首页路由
+     * 首页 默认“/”
      *
      * @return
      */
