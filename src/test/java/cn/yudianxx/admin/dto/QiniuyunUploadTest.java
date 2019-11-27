@@ -44,7 +44,7 @@ public class QiniuyunUploadTest {
         String bucket = tumoProperties.getQiniu().getBn();
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
 
-        String key = "11112";
+        String key = "";
         Auth auth = Auth.create(accessKey, secretKey);
 
         String upToken = auth.uploadToken(bucket);
