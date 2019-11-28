@@ -103,7 +103,11 @@
                 syncScrolling: "single",
                 saveHTMLToTextarea : true,
                 htmlDecode : "style,script,iframe|on*",
-                path: "/admin/lib/editormd/lib/"
+                path: "/admin/lib/editormd/lib/",
+                /**上传图片相关配置如下*/
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "/api/article/uploadFile"
             });
         });
 

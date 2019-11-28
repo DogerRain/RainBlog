@@ -56,6 +56,9 @@
                                 <div id="content-md">
                                     <textarea name="content" style="display:none;"></textarea>
                                 </div>
+
+
+
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -97,9 +100,13 @@
                 width: "100%",
                 height: 640,
                 syncScrolling: "single",
-                saveHTMLToTextarea : true,
+                saveHTMLToTextarea : true, //使用post
                 htmlDecode : "style,script,iframe|on*",
-                path: "/admin/lib/editormd/lib/"
+                path: "/admin/lib/editormd/lib/",
+                /**上传图片相关配置如下*/
+                imageUpload : true,
+                imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                imageUploadURL: "/api/article/uploadFile"
             });
         });
 
@@ -174,3 +181,6 @@
         });
     });
 </script>
+
+
+
