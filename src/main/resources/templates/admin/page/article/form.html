@@ -1,4 +1,6 @@
-<style>
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<style xmlns:th="http://www.w3.org/1999/xhtml">
+
     #upload{
         height: 200px;
         width: 200px;
@@ -92,6 +94,8 @@
 <script data-th-src="@{/admin/lib/editormd/jquery.min.js}"></script>
 <script data-th-src="@{/admin/lib/editormd/editormd.min.js}"></script>
 <script data-th-src="@{/admin/lib/formSelect/formSelect.min.js}"></script>
+
+
 <script data-th-inline="none" type="text/javascript">
     layui.use(['admin', 'element', 'form', 'upload'], function(admin, element, form, upload) {
         var contentMd;
@@ -106,6 +110,7 @@
                 /**上传图片相关配置如下*/
                 imageUpload : true,
                 imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                // imageUploadURL: "/api/article/uploadFile"
                 imageUploadURL: "/api/article/uploadFile"
             });
         });

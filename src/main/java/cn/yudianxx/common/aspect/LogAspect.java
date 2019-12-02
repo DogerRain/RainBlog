@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author tycoding
@@ -33,7 +34,7 @@ public class LogAspect {
     }
 
     @Around("pointcut()")
-    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws JsonProcessingException {
+    public Object around(ProceedingJoinPoint proceedingJoinPoint) throws JsonProcessingException, UnsupportedEncodingException {
         Object result = null;
         try {
             result = proceedingJoinPoint.proceed();

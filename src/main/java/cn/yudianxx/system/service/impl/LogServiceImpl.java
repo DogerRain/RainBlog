@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, SysLog> implements Lo
     }
 
     @Override
-    public void saveLog(ProceedingJoinPoint proceedingJoinPoint, SysLog log) throws JsonProcessingException {
+    public void saveLog(ProceedingJoinPoint proceedingJoinPoint, SysLog log) throws JsonProcessingException, UnsupportedEncodingException {
         MethodSignature signature = (MethodSignature) proceedingJoinPoint.getSignature();
         Method method = signature.getMethod();
         Log annotation = method.getAnnotation(Log.class);

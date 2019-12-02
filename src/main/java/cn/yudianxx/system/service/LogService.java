@@ -8,6 +8,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * @author tycoding
  * @date 2019-03-13
@@ -19,5 +21,5 @@ public interface LogService extends IService<SysLog> {
     void delete(Long id);
 
     @Async
-    void saveLog(ProceedingJoinPoint proceedingJoinPoint, SysLog log) throws JsonProcessingException;
+    void saveLog(ProceedingJoinPoint proceedingJoinPoint, SysLog log) throws JsonProcessingException, UnsupportedEncodingException;
 }

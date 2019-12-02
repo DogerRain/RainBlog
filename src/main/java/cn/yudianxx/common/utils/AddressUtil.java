@@ -6,11 +6,10 @@ import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
+
 /**
  * @author tycoding
  * @date 2019-03-26
@@ -23,11 +22,10 @@ public class AddressUtil {
      * @param ip
      * @return
      */
-    public static String getAddress(String ip) {
+    public static String getAddress(String ip) throws UnsupportedEncodingException {
         //db
         String dbPath = AddressUtil.class.getResource("/config/ip2region.db").getPath();
-
-        File file = new File(dbPath);
+        File file = new File(URLDecoder.decode(dbPath,"UTF-8"));
 
         if (!file.exists()) {
             String tmpDir = System.getProperties().getProperty("java.io.tmpdir");

@@ -143,20 +143,19 @@ public class ArticleController extends BaseController {
 
 
     @RequestMapping(value = "/uploadFile")
-    public JSONObject uploadFile(@RequestParam(value = "editormd-image-file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
-        MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+    public JSONObject uploadFile(@RequestParam(value = "editormd-image-file", required = false) MultipartFile file, HttpServletRequest request) {
         R<Map> r = qiNiuController.upload(file, request);
-        ResponseResult result = new ResponseResult();
         JSONObject resultJs = new JSONObject();
-
+        Map<String,String> map = new HashMap<>();
         try {
             resultJs.put("success", 1);
             resultJs.put("message", "上传成功");
-//                resultJs.put("url", url);
             resultJs.put("url", "http://"+r.getData().get("url"));
+
         } catch (Exception e) {
             e.printStackTrace();
-            result.setMessage("系统异常，图片上传失败");
+            resultJs.put("success", 0);
+            resultJs.put("message", "上传失败");
         }
         return resultJs;
     }

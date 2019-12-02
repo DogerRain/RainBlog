@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -137,7 +138,7 @@ public class QiNiuController {
             try {
                 //将MutipartFile对象转换为File对象，相当于需要以本地作为缓冲区暂时储存文件
                 //获取文件在服务器的储存位置
-                File path = new File(ResourceUtils.getURL("classpath:").getPath());
+                File path = new File(URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(),"UTF-8"));
                 File filePath = new File(path.getAbsolutePath(), "upload/");
                 if (!filePath.exists() && !filePath.isDirectory()) {
                     log.info("目录不存在，创建目录===========>" + filePath);
