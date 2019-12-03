@@ -182,7 +182,6 @@ public class ArticleController extends BaseController {
             String saveFileName = Thread.currentThread().getId() + extensionName;
 //        String a = (URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(), "UTF-8"));
             String a ="E:\\projet\\RainBlog\\src\\main\\resources\\static\\admin\\blog_image\\";
-            String path1 = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"static";
             Path path = Paths.get(a, saveFileName);
             Files.write(path, file.getBytes());
             file.transferTo(Paths.get(a, saveFileName).toFile());
