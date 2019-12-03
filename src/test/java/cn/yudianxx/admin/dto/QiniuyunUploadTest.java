@@ -8,7 +8,6 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
-import net.sf.ehcache.store.disk.ods.Region;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,8 @@ public class QiniuyunUploadTest {
 
     private UploadManager uploadManager = new UploadManager(new Configuration());
 
-    String localFilePath = "F:\\qiniu\\unnamed.jpg";
+//    String localFilePath = "F:\\qiniu\\unnamed.jpg";
+    String localFilePath = "F:\\qiniu\\1575031365174.jpg";
 
     @Test
     public void test() {
