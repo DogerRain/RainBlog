@@ -176,22 +176,9 @@ public class ArticleController extends BaseController {
 ////            return resultJs;
             //丢到七牛云
             commonService.uploadFileToQiNiu(file, key);
-
-            String originalFilename = file.getOriginalFilename();
-            String extensionName = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String saveFileName = Thread.currentThread().getId() + extensionName;
-//        String a = (URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(), "UTF-8"));
-            String a ="E:\\projet\\RainBlog\\src\\main\\resources\\static\\admin\\blog_image\\";
-            Path path = Paths.get(a, saveFileName);
-            Files.write(path, file.getBytes());
-            file.transferTo(Paths.get(a, saveFileName).toFile());
-            String fileUrl = "http://localhost:8848" + "/admin/blog_image/" + saveFileName;
-//            File file = ResourceUtils.getFile(ResourceUtils.FILE_URL_PREFIX);
-            String path2 = ClassUtils.getDefaultClassLoader().getResource("").getPath();
             JSONObject result = new JSONObject();
             result.put("success", 1);
             result.put("message", "success");
-//            result.put("url", fileUrl);
 
 
             result.put("url", "http://" + tumoProperties.getQiniu().getUrl()+key);

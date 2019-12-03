@@ -9,7 +9,7 @@ spring:
 
   #thymeleaf模板引擎
   thymeleaf:
-    cache: false
+    cache: true
 
   #文件上传相关设置
   servlet:

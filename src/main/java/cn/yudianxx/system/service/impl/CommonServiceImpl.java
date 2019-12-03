@@ -51,8 +51,9 @@ public class CommonServiceImpl implements CommonService {
             File localFile = new File(filePath, key);
             multipartFile.transferTo(localFile); //写入磁盘
             //压缩文件,覆盖源文件
-            FilePath = filePath + "/" +"deal_"+ key;
-            returnDealFile(localFile,FilePath);
+            FilePath = filePath + "/"  + key;
+//            FilePath = filePath + "/" +"deal_"+ key;
+//            returnDealFile(localFile,FilePath);
             log.info("文件原始路径=========>" + filePath);
             log.info("新文件名称===========>" + key);
 
@@ -61,7 +62,7 @@ public class CommonServiceImpl implements CommonService {
             Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
             String upToken = auth.uploadToken(qiniu.getBn());
             UploadManager uploadManager = new UploadManager(new Configuration());
-            Response res = uploadManager.put(FilePath, key, upToken);;
+            Response res = uploadManager.put(FilePath, key, upToken);
             URL = qiniu.getUrl() + key;
         }catch (Exception e){
             System.out.println("报错了");
