@@ -4,42 +4,29 @@ import cn.yudianxx.common.annotation.Log;
 import cn.yudianxx.common.controller.BaseController;
 import cn.yudianxx.common.exception.GlobalException;
 import cn.yudianxx.common.properties.TumoProperties;
+import cn.yudianxx.common.utils.ConstantValueUtils;
 import cn.yudianxx.common.utils.QueryPage;
 import cn.yudianxx.common.utils.R;
 import cn.yudianxx.system.entity.SysArticle;
 import cn.yudianxx.system.entity.SysTag;
 import cn.yudianxx.system.entity.dto.ArchivesWithArticle;
-import cn.yudianxx.system.response.ResponseResult;
 import cn.yudianxx.system.service.ArticleService;
 import cn.yudianxx.system.service.ArticleTagService;
 import cn.yudianxx.system.service.CommonService;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.fileupload.disk.DiskFileItem;
-import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ClassUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author TyCoding
@@ -64,6 +51,7 @@ public class ArticleController extends BaseController {
     CommonService commonService;
     @Autowired
     TumoProperties tumoProperties;
+
     /**
      * 查询文章总数量
      *
@@ -155,40 +143,20 @@ public class ArticleController extends BaseController {
 
     @RequestMapping(value = "/uploadFile")
     public JSONObject uploadFile(@RequestParam(value = "editormd-image-file", required = false) MultipartFile file, HttpServletRequest request) {
-//        R<Map> r = qiNiuController.upload(file, request);
-
-        String key = new Date().getTime() + "";
-        String filename = file.getOriginalFilename(); //获取原始文件名称
-        key += filename.substring(filename.lastIndexOf(".")); //获取文件类型
-        JSONObject resultJs = new JSONObject();
+        JSONObject result = new JSONObject();
         try {
-//            //路径问题
-////            System.out.println(request.getServletContext().getRealPath(""));
-////            File path = new File(URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(), "UTF-8"));
-//////            File filePath = new File(path.getAbsolutePath(), "upload/");
-////            //        采用异步的方式上传文件
-////            String filename = file.getOriginalFilename(); //获取原始文件名称
-////            key += filename.substring(filename.lastIndexOf(".")); //获取文件类型
-////            commonService.uploadFileToQiNiu(file, key);
-////            resultJs.put("success", 1);
-////            resultJs.put("message", "上传成功");
-////            resultJs.put("url", "http://" + key);
-////            return resultJs;
             //丢到七牛云
-            commonService.uploadFileToQiNiu(file, key);
-            JSONObject result = new JSONObject();
+            R<Map> r = qiNiuController.upload(file, request);
             result.put("success", 1);
             result.put("message", "success");
-
-
-            result.put("url", "http://" + tumoProperties.getQiniu().getUrl()+key);
-
-
+            result.put("url", ConstantValueUtils.HTTP + r.getData().get("url"));
             return result;
         } catch (Exception e) {
-            log.error("");
+            result.put("success", 1);
+            result.put("message", "fail");
+            log.error("图片上传出错", e);
         }
-        return resultJs;
+        return result;
     }
 
     @RequestMapping("editormdPic")
@@ -208,25 +176,25 @@ public class ArticleController extends BaseController {
         return resultJs;
     }
 
-    @RequestMapping("editormdPic1")
-    @ResponseBody
-    public JSONObject editormdPic1(@RequestParam(value = "file", required = true) MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String originalFilename = multipartFile.getOriginalFilename();
-        String extensionName = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String saveFileName = Thread.currentThread().getId() + extensionName;
-//        String a = (URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(), "UTF-8"));
-        String a ="E:\\projet\\RainBlog\\src\\main\\resources\\static\\admin\\blog_image\\";
-        String path1 = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"static";
-        Path path = Paths.get(a, saveFileName);
-        Files.write(path, multipartFile.getBytes());
-        multipartFile.transferTo(Paths.get(a, saveFileName).toFile());
-        String fileUrl = "http://localhost:8848" + "/admin/blog_image/" + saveFileName;
-        File file = ResourceUtils.getFile(ResourceUtils.FILE_URL_PREFIX);
-        String path2 = ClassUtils.getDefaultClassLoader().getResource("").getPath();
-        JSONObject result = new JSONObject();
-        result.put("success", 1);
-        result.put("message", "success");
-        result.put("url", fileUrl);
-        return result;
-    }
+//    @RequestMapping("editormdPic1")
+//    @ResponseBody
+//    public JSONObject editormdPic1(@RequestParam(value = "file", required = true) MultipartFile multipartFile, HttpServletRequest request, HttpServletResponse response) throws Exception {
+//        String originalFilename = multipartFile.getOriginalFilename();
+//        String extensionName = originalFilename.substring(originalFilename.lastIndexOf("."));
+//        String saveFileName = Thread.currentThread().getId() + extensionName;
+////        String a = (URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(), "UTF-8"));
+//        String a = "E:\\projet\\RainBlog\\src\\main\\resources\\static\\admin\\blog_image\\";
+//        String path1 = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "static";
+//        Path path = Paths.get(a, saveFileName);
+//        Files.write(path, multipartFile.getBytes());
+//        multipartFile.transferTo(Paths.get(a, saveFileName).toFile());
+//        String fileUrl = "http://localhost:8848" + "/admin/blog_image/" + saveFileName;
+//        File file = ResourceUtils.getFile(ResourceUtils.FILE_URL_PREFIX);
+//        String path2 = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+//        JSONObject result = new JSONObject();
+//        result.put("success", 1);
+//        result.put("message", "success");
+//        result.put("url", fileUrl);
+//        return result;
+//    }
 }

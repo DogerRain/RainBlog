@@ -95,6 +95,7 @@ public class CommonServiceImpl implements CommonService {
         return result;
     }
 
+    @Override
     public void returnDealFile(File localFile,String sourcePath) throws IOException {
         int[] results = getImgWidthHeight(localFile);
         int widthdist = results[0];

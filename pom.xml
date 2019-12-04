@@ -237,7 +237,22 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.10</version>
         </dependency>
-
+        <!--google图片压缩工具-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.yahoo.platform.yui</groupId>-->
+            <!--<artifactId>yuicompressor</artifactId>-->
+            <!--<version>2.4.7</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.meizu.tools</groupId>-->
+            <!--<artifactId>yuicompress</artifactId>-->
+            <!--<version>1.1.0</version>-->
+        <!--</dependency>-->
 
     </dependencies>
 

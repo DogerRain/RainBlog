@@ -4,19 +4,20 @@ import cn.yudianxx.common.constants.enums.CommonEnum;
 import cn.yudianxx.common.exception.GlobalException;
 import cn.yudianxx.common.properties.QiniuProperties;
 import cn.yudianxx.common.properties.TumoProperties;
+import cn.yudianxx.common.utils.ConstantValueUtils;
 import cn.yudianxx.common.utils.R;
 import cn.yudianxx.system.entity.QiNiuEntity;
-import com.google.gson.Gson;
+import cn.yudianxx.system.service.CommonService;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.storage.model.FileInfo;
 import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -37,7 +38,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -57,6 +57,9 @@ public class QiNiuController {
 
     @Autowired
     private TumoProperties properties;
+
+    @Autowired
+    CommonService commonService;
 
     private void check(QiniuProperties qiniu) {
         if (StringUtils.isBlank(qiniu.getAk()) || StringUtils.isBlank(qiniu.getSk()) || StringUtils.isBlank(qiniu.getBn()) || StringUtils.isBlank(qiniu.getUrl())) {
@@ -131,8 +134,6 @@ public class QiNiuController {
     public R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         QiniuProperties qiniu = properties.getQiniu();
         this.check(qiniu);
-        Map map = new HashMap<>();
-        Response res = null;
         if (!file.isEmpty()) {
             //上传文件路径
             String FilePath = "";
@@ -142,7 +143,7 @@ public class QiNiuController {
             try {
                 //将MutipartFile对象转换为File对象，相当于需要以本地作为缓冲区暂时储存文件
                 //获取文件在服务器的储存位置
-                File path = new File(URLDecoder.decode(ResourceUtils.getURL("classpath:").getPath(), "UTF-8"));
+                File path = new File(ResourceUtils.getURL("classpath:").getPath());
                 File filePath = new File(path.getAbsolutePath(), "upload/");
                 if (!filePath.exists() && !filePath.isDirectory()) {
                     log.info("目录不存在，创建目录===========>" + filePath);
@@ -153,14 +154,22 @@ public class QiNiuController {
 
                 File localFile = new File(filePath, key);
                 file.transferTo(localFile); //写入磁盘
-                log.info("文件原始路径=========>" + filePath);
-                log.info("新文件名称===========>" + key);
                 FilePath = filePath + "/" + key;
+                log.info("源文件名称===========>{},文件大小：{}m",FilePath,localFile.length()/1024/1024);
+                //压缩图片
+//                commonService.returnDealFile(localFile,FilePath);
+                if (localFile.length()/1024/1024>=5){
+                    Thumbnails.of(FilePath)
+                            .scale(ConstantValueUtils.SCALE)
+                            .outputQuality(ConstantValueUtils.OUTPUTQUALITY)
+                            .toFile(FilePath);
+                }
+
+
+                log.info("新文件名称===========>{},压缩后文件大小：{}m",FilePath,localFile.length()/1024/1024);
 
                 //密钥配置
                 Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
-
-/*  这种方式上传大文件（大于6m的时候会IO中断，原因未知）
                 //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
                 Zone z = Zone.autoZone();
                 Configuration c = new Configuration(z);
@@ -168,33 +177,22 @@ public class QiNiuController {
                 UploadManager uploadManager = new UploadManager(c);
                 //调用put方法上传
                 Response res = uploadManager.put(FilePath, key, auth.uploadToken(qiniu.getBn()));
-*/
-                String upToken = auth.uploadToken(qiniu.getBn());
-                UploadManager uploadManager = new UploadManager(new Configuration());
-//                res = uploadManager.put(FilePath, key, upToken);
                 //打印返回的信息
-//                res.bodyString(); //返回数据格式： {"hash":"FlHXdiArTIzeNy94EOxzlCQC7pDS","key":"1074213185631420416.png"}
-//                log.info("文件上传成功============>" + res.bodyString());
-
+                //res.bodyString() 返回数据格式： {"hash":"FlHXdiArTIzeNy94EOxzlCQC7pDS","key":"1074213185631420416.png"}
+                log.info("文件上传成功============>" + res.bodyString());
+                Map map = new HashMap<>();
                 map.put("name", key);
-                map.put("url", FilePath);
+                map.put("url", qiniu.getUrl() + key);
 
-//                if (localFile.exists()) {
-//                    localFile.delete(); //删除本地缓存的文件
-//                }
+                if (localFile.exists()) {
+                    localFile.delete(); //删除本地缓存的文件
+                }
                 return new R<>(map);
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error("文件上传失败============>" + e.getMessage());
                 throw new GlobalException(e.getMessage());
             }
-//            finally {
-//                if (res.isOK()) {
-//                    map.put("name", key);
-//                    map.put("url", qiniu.getUrl() + key);
-//                    return new R<>(map);
-//                }
-//            }
         }
         return new R(CommonEnum.FILE_ERROR);
     }
