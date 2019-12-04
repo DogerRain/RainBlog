@@ -1,5 +1,6 @@
 package cn.yudianxx.admin.dto;
 
+import cn.yudianxx.common.config.QiniuyunConfig;
 import cn.yudianxx.common.properties.TumoProperties;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
@@ -27,6 +28,9 @@ public class QiniuyunUploadTest {
     @Autowired
     TumoProperties tumoProperties;
 
+    @Autowired
+    QiniuyunConfig config;
+
     private UploadManager uploadManager = new UploadManager(new Configuration());
 
 //    String localFilePath = "F:\\qiniu\\unnamed.jpg";
@@ -34,8 +38,10 @@ public class QiniuyunUploadTest {
 
     @Test
     public void test() {
-        upload(localFilePath);
-        download();
+//        upload(localFilePath);
+//        download();
+        System.out.println(config.getBucketName());
+        System.out.println(config.getUrl());
     }
 
     public String upload(String file) {

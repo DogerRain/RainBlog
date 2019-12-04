@@ -5,6 +5,7 @@ import cn.yudianxx.common.exception.GlobalException;
 import cn.yudianxx.common.properties.QiniuProperties;
 import cn.yudianxx.common.properties.TumoProperties;
 import cn.yudianxx.common.utils.ConstantValueUtils;
+import cn.yudianxx.common.utils.ImageCompressUtils;
 import cn.yudianxx.common.utils.R;
 import cn.yudianxx.system.entity.QiNiuEntity;
 import cn.yudianxx.system.service.CommonService;
@@ -158,16 +159,8 @@ public class QiNiuController {
                 log.info("源文件名称===========>{},文件大小：{}m",FilePath,localFile.length()/1024/1024);
                 //压缩图片
 //                commonService.returnDealFile(localFile,FilePath);
-                if (localFile.length()/1024/1024>=5){
-                    Thumbnails.of(FilePath)
-                            .scale(ConstantValueUtils.SCALE)
-                            .outputQuality(ConstantValueUtils.OUTPUTQUALITY)
-                            .toFile(FilePath);
-                }
-
-
+                ImageCompressUtils.googleImageCompress(localFile,FilePath);
                 log.info("新文件名称===========>{},压缩后文件大小：{}m",FilePath,localFile.length()/1024/1024);
-
                 //密钥配置
                 Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
                 //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。

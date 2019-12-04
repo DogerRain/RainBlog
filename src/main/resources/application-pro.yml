@@ -26,10 +26,10 @@ spring:
 # 打印sql
 logging:
   level:
-    cn.yudianxx.system.mapper: DEBUG
+    cn.yudianxx.system.mapper: info
 
 qiniuyun:
   AccessKey: UrQy3c4liy9FkDbqYqNbGGZu-llJyZB_NcNp8ssW
   SecretKey: D733cwC6teyDcT08aijMuKIEDGU4WSGm9GtREe6n
-  BucketName: rain-blog-yudianxx
-  url: hyw.baimuxym.cn
+  BucketName: rain-blog-yudianxx-pro
+  url: rainyudianxx.baimuxym.cn
