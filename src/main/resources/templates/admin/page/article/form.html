@@ -110,7 +110,6 @@
                 /**上传图片相关配置如下*/
                 imageUpload : true,
                 imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                // imageUploadURL: "/api/article/uploadFile"
                 imageUploadURL: "/api/article/uploadFile"
             });
         });
@@ -154,7 +153,8 @@
                 if (res.code == 500) {
                     return admin.modal.error(res.msg);
                 }
-                $('#cover').attr('src', res.data.url)
+                // console.log("http://"+res.data.url);
+                $('#cover').attr('src', "http://"+res.data.url)
             }
         });
 

@@ -47,8 +47,8 @@ public class ArticleController extends BaseController {
     @Autowired
     QiNiuController qiNiuController;
 
-    @Autowired
-    CommonService commonService;
+//    @Autowired
+//    CommonService commonService;
     @Autowired
     TumoProperties tumoProperties;
 

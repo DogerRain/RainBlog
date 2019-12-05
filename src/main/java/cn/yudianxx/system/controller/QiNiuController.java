@@ -59,8 +59,8 @@ public class QiNiuController {
     @Autowired
     private TumoProperties properties;
 
-    @Autowired
-    CommonService commonService;
+//    @Autowired
+//    CommonService commonService;
 
     private void check(QiniuProperties qiniu) {
         if (StringUtils.isBlank(qiniu.getAk()) || StringUtils.isBlank(qiniu.getSk()) || StringUtils.isBlank(qiniu.getBn()) || StringUtils.isBlank(qiniu.getUrl())) {

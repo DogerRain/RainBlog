@@ -5,11 +5,12 @@ server:
 
 spring:
   profiles:
-    active: pro
+    active: @spring.profiles.active@
 
   #thymeleaf模板引擎
   thymeleaf:
-    cache: true
+    #false 表示不使用缓存，改了页面会实时更新
+    cache: false
 
   #文件上传相关设置
   servlet:
