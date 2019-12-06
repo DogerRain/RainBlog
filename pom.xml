@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.tycoding</groupId>
-    <artifactId>tumo</artifactId>
+    <groupId>cn.yudianxx</groupId>
+    <artifactId>RainBlog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>tumo</name>
-    <description>tumo</description>
+    <name>RainBlog</name>
+    <description>RainBlog</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -253,58 +253,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!--<source>1.8</source>-->
-                    <!--<target>1.8</target>-->
-                    <!--<archive>-->
-                        <!--<manifest>-->
-                            <mainClass>cn.yudianxx.RainblogApplication</mainClass>
-                            <!--<addClasspath>true</addClasspath>-->
-                            <!--<classpathPrefix>lib/</classpathPrefix>-->
-                        <!--</manifest>-->
-                    <!--</archive>-->
-
+                    <mainClass>cn.yudianxx.RainblogApplication</mainClass>
                 </configuration>
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>repackage</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<mainClass>cn.yudianxx.RainblogApplication</mainClass>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
-
-            <!--<plugin>-->
-
-                <!--<artifactId>maven-compiler-plugin</artifactId>-->
-
-                <!--<configuration>-->
-
-                    <!--<encoding>UTF-8</encoding>-->
-
-                    <!--<compilerArguments>-->
-
-                        <!--<verbose />-->
-
-                        <!--<bootclasspath>${java.home}\lib\rt.jar${path.separator}${java.home}\lib\jce.jar${path.separator}</bootclasspath>-->
-
-                    <!--</compilerArguments>-->
-
-                <!--</configuration>-->
-
-            <!--</plugin>-->
-
         </plugins>
-
     </build>
 
 
