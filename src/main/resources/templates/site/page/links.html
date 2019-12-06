@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Links - Tumo</title>
+    <title>链接 - RainBlog</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -43,7 +43,7 @@
 
 <div id="respond-post-334" class="comment-container">
     <div id="comments" class="clearfix">
-        <span class="response">Responses
+        <!--<span class="response">Responses
             <a id="cancel-comment-reply-link"
                href="https://www.linpx.com/p/mat-analysis-of-indicators-for-heap-dump.html#respond-post-334"
                rel="nofollow" style="display:none"
@@ -58,7 +58,7 @@
             <input type="url" name="url" id="url" class="form-control input-control clearfix" placeholder="Site (http://)" value="">
             <textarea name="content" id="textarea" class="form-control" placeholder="Your comment here. Be cool. " required=""></textarea>
             <button type="submit" class="submit" id="submit">SUBMIT</button>
-        </form>
+        </form>-->
         <ol class="comment-list">
             <li th:each="parent : ${comments.rows}" th:id="'li-comment-' + ${parent.id}" class="comment-body comment-parent comment-even">
                 <div th:id="'comment-' + ${parent.id}">

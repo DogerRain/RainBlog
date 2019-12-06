@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>链接 - RainBlog</title>
+    <title>关于我 - RainBlog</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -23,11 +23,11 @@
         <p>RainBlog 博客项目起初是在 <a href="https://github.com/TyCoding/tumo" style="color: green" target="_blank">Tumo</a> Fork过来的项目</p>
         <p>后来，在Tumo的基础上加入了自己的技术，如果需要源码，可以在这里找到我<a href="https://github.com/DogerRain/RainBlog" style="color: blue" target="_blank">RainBlog</a></p>
         <p>但是由于技术太菜，项目存在很多未知问题，大家可以给我提Issues</p>
-        <p>目前该博客只会分享关于我自己的图片，技术博客可以关注我的另外一个<a style="color: red" target="_blank" href="https://blog.csdn.net/yudianxiaoxiao"></a></p>
+        <p>目前该博客只会分享关于我日常拍摄的图片，技术交流可以关注我的另外一个<a style="color: red" target="_blank" href="https://blog.csdn.net/yudianxiaoxiao">博客</a></p>
         <h3>关于我</h3>
-        <p>目前任职于“你是我所有的渴望 我敬仰与热爱的一切”</p>
-        <!--<p>马不停蹄赶来的路上...</p>-->
-        <p>你可以通过博客页底的社交链接联系到我···</p>
+        <p>目前任职于“你是我所有的渴望 我敬仰与热爱的一切”的MEIZU</p>
+        <p>我在马不停蹄赶来的路上...</p>
+        <p>你可以通过下面的社交链接联系到我···</p>
         <ul>
             <li><p><a href="https://blog.csdn.net/yudianxiaoxiao" target="_blank">Blog</a></p></li>
             <li><p><a href="https://github.com/DogerRain" target="_blank">Github</a></p></li>
@@ -40,7 +40,7 @@
 
 <div id="respond-post-334" class="comment-container">
     <div id="comments" class="clearfix">
-        <span class="response">Responses
+       <!-- <span class="response">Responses
             <a id="cancel-comment-reply-link"
                href="https://www.linpx.com/p/mat-analysis-of-indicators-for-heap-dump.html#respond-post-334"
                rel="nofollow" style="display:none"
@@ -55,7 +55,7 @@
             <input type="url" name="url" id="url" class="form-control input-control clearfix" placeholder="Site (http://)" value="">
             <textarea name="content" id="textarea" class="form-control" placeholder="Your comment here. Be cool. " required=""></textarea>
             <button type="submit" class="submit" id="submit">SUBMIT</button>
-        </form>
+        </form>-->
         <ol class="comment-list">
             <li th:each="parent : ${comments.rows}" th:id="'li-comment-' + ${parent.id}" class="comment-body comment-parent comment-even">
                 <div th:id="'comment-' + ${parent.id}">

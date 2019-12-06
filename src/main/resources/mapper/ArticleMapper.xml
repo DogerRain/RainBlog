@@ -24,4 +24,8 @@
             publish_time LIKE CONCAT ('%', #{date}, '%')
     </select>
 
+    <select id="findArchivesByTags" resultType="SysArticle">
+       SELECT ta.* FROM  tb_article ta LEFT JOIN tb_article_tag tat on	ta.id= tat.article_id
+      WHERE tat.tag_id=#{tagId}
+    </select>
 </mapper>

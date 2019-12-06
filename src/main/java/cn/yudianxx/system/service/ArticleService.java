@@ -77,9 +77,17 @@ public interface ArticleService extends IService<SysArticle> {
     List<ArchivesWithArticle> findArchives();
 
     /**
+     * 根据tags标签归类
+     * @return
+     */
+    List<ArchivesWithArticle> findArchivesByTags(Long tagId);
+
+    /**
      * 添加
      *
      * @param sysArticle
      */
     void add(SysArticle sysArticle);
+
+
 }

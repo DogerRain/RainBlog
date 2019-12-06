@@ -6,8 +6,10 @@ import cn.yudianxx.common.utils.QueryPage;
 import cn.yudianxx.system.entity.*;
 import cn.yudianxx.system.entity.dto.ArchivesWithArticle;
 import cn.yudianxx.system.mapper.ArticleMapper;
+import cn.yudianxx.system.mapper.TagMapper;
 import cn.yudianxx.system.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,6 +32,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, SysArticle> i
 
     @Autowired
     private ArticleMapper articleMapper;
+
+    @Autowired
+    private TagMapper tagMapper;
 
     @Autowired
     private CategoryService categoryService;
@@ -181,6 +186,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, SysArticle> i
             dates.forEach(date -> {
                 List<SysArticle> sysArticleList = articleMapper.findArchivesByDate(date);
                 ArchivesWithArticle archivesWithArticle = new ArchivesWithArticle(date, sysArticleList);
+                archivesWithArticleList.add(archivesWithArticle);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GlobalException(e.getMessage());
+        }
+        return archivesWithArticleList;
+    }
+
+    @Override
+    public List<ArchivesWithArticle> findArchivesByTags(Long tagId){
+        List<ArchivesWithArticle> archivesWithArticleList = new ArrayList<ArchivesWithArticle>();
+        try {
+            //tags的名称
+            List<SysTag> sysTag = tagMapper.selectList(new LambdaQueryWrapper<SysTag>().eq(SysTag::getId,tagId));
+            sysTag.forEach(date -> {
+                //把文章查出来，放到list里面
+                List<SysArticle> sysArticleList = articleMapper.findArchivesByTags(date.getId());
+                ArchivesWithArticle archivesWithArticle = new ArchivesWithArticle(date.getName(), sysArticleList);
                 archivesWithArticleList.add(archivesWithArticle);
             });
         } catch (Exception e) {

@@ -15,6 +15,8 @@ public interface CategoryService extends IService<SysCategory> {
 
     IPage<SysCategory> list(SysCategory sysCategory, QueryPage queryPage);
 
+    List<SysCategory> findCategory();
+
     void add(SysCategory sysCategory);
 
     void update(SysCategory sysCategory);

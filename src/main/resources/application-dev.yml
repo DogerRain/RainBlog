@@ -22,7 +22,7 @@ spring:
       min-evictable-idle-time-millis: 30000
   devtools:
     restart:
-      enabled: false
+      enabled: true
 # 打印sql
 logging:
   level:

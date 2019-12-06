@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>[[${p.title}]] - Tumo</title>
+    <title>[[${p.title}]] - RainBlog</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -28,7 +28,8 @@
     </div>
     <div id="post-content" class="post-content" itemprop="articleBody">
         <p class="post-tags" th:if="${p.tags} != null">
-            <a th:each="tag : ${p.tags}" href="#">[[${tag.name}]]</a>
+            <a th:each="tag : ${p.tags}" th:href="'/archives?tag=' + ${tag.id}"> [[${tag.name}]] </a>
+            <!--<a th:href="'/article/' + ${a.id}" th:text="${a.title}"></a>-->
         </p>
 
         <p th:utext="${p.content}"></p>

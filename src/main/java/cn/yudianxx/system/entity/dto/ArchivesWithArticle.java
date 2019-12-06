@@ -1,6 +1,8 @@
 package cn.yudianxx.system.entity.dto;
 
 import cn.yudianxx.system.entity.SysArticle;
+import cn.yudianxx.system.entity.SysCategory;
+import cn.yudianxx.system.entity.SysTag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArchivesWithArticle implements Serializable {
-
+//    private List<SysTag> sysTags;
+//    private List<SysCategory> sysCategories;
     private String date;
     private List<SysArticle> articles;
 }

@@ -78,4 +78,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, SysCategory
         List<SysCategory> list = categoryMapper.selectList(queryWrapper);
         return list.size() > 0 ? list.get(0) : null;
     }
+
+    @Override
+    public List<SysCategory> findCategory(){
+        return categoryMapper.selectList(new LambdaQueryWrapper<SysCategory>().last("limit 10"));
+    }
 }

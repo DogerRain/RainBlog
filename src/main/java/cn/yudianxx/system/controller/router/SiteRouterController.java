@@ -4,10 +4,7 @@ import cn.yudianxx.common.constants.CommonConstant;
 import cn.yudianxx.common.constants.SiteConstant;
 import cn.yudianxx.common.controller.BaseController;
 import cn.yudianxx.common.utils.QueryPage;
-import cn.yudianxx.system.entity.SysArticle;
-import cn.yudianxx.system.entity.SysCategory;
-import cn.yudianxx.system.entity.SysComment;
-import cn.yudianxx.system.entity.SysLink;
+import cn.yudianxx.system.entity.*;
 import cn.yudianxx.system.entity.dto.ArchivesWithArticle;
 import cn.yudianxx.system.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +41,9 @@ public class SiteRouterController extends BaseController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private TagService tagService;
 
     @Autowired
     private LinkService linkService;
@@ -162,11 +163,22 @@ public class SiteRouterController extends BaseController {
      * @return
      */
     @RequestMapping("/archives")
-    public String archives(Model model) {
+    public String archives(Model model, @RequestParam(name = "tag", required = false) Long tagId) {
         try {
-            List<ArchivesWithArticle> list = articleService.findArchives();
-            model.addAttribute(SiteConstant.ARCHIVES_MODEL, list);
+            List<ArchivesWithArticle> list = new ArrayList<>();
+            if (tagId != null) {
+                list = articleService.findArchivesByTags(tagId);
 
+            } else {
+                list = articleService.findArchives();
+                model.addAttribute(SiteConstant.ARCHIVES_MODEL, list);
+            }
+            //把所有的category和tags都列出来：
+            List<SysTag> sysTagList = tagService.findAll();
+            List<SysCategory> sysCategoryList = categoryService.findCategory();
+            model.addAttribute("sysTagList", sysTagList);
+            model.addAttribute("sysCategoryList", sysCategoryList);
+            model.addAttribute(SiteConstant.ARCHIVES_MODEL, list);
             //初始化
             this.init(model);
         } catch (Exception e) {
@@ -175,6 +187,20 @@ public class SiteRouterController extends BaseController {
         }
         return "site/page/archives";
     }
+//    @RequestMapping("/archives/{tagId}")
+//    public String archivesByTags(Model model,@RequestParam(name = "tag", required = false ) String tagId) {
+//        try {
+//            List<ArchivesWithArticle> list = articleService.findArchives();
+//            model.addAttribute(SiteConstant.ARCHIVES_MODEL, list);
+//
+//            //初始化
+//            this.init(model);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return "redirect:/error/500";
+//        }
+//        return "site/page/archives";
+//    }
 
     /**
      * 友链页面

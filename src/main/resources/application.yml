@@ -7,6 +7,9 @@ spring:
   profiles:
     active: @spring.profiles.active@
 
+  devtools:
+    restart:
+      enabled: true
   #thymeleaf模板引擎
   thymeleaf:
     #false 表示不使用缓存，改了页面会实时更新

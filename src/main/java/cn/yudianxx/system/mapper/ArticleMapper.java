@@ -14,4 +14,8 @@ public interface ArticleMapper extends BaseMapper<SysArticle> {
     List<String> findArchivesDates();
 
     List<SysArticle> findArchivesByDate(String date);
+
+    List<SysArticle> findArchivesByTags(Long tagId);
+
+
 }
