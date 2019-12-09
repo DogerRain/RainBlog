@@ -17,5 +17,7 @@ public interface ArticleMapper extends BaseMapper<SysArticle> {
 
     List<SysArticle> findArchivesByTags(Long tagId);
 
+    List<SysArticle> findArchivesByCategorys(Long categoryId);
+
 
 }

@@ -6,6 +6,7 @@ import cn.yudianxx.common.utils.QueryPage;
 import cn.yudianxx.system.entity.*;
 import cn.yudianxx.system.entity.dto.ArchivesWithArticle;
 import cn.yudianxx.system.mapper.ArticleMapper;
+import cn.yudianxx.system.mapper.CategoryMapper;
 import cn.yudianxx.system.mapper.TagMapper;
 import cn.yudianxx.system.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -35,6 +36,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, SysArticle> i
 
     @Autowired
     private TagMapper tagMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Autowired
     private CategoryService categoryService;
@@ -196,11 +200,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, SysArticle> i
     }
 
     @Override
-    public List<ArchivesWithArticle> findArchivesByTags(Long tagId){
+    public List<ArchivesWithArticle> findArchivesByTags(Long tagId) {
         List<ArchivesWithArticle> archivesWithArticleList = new ArrayList<ArchivesWithArticle>();
         try {
             //tags的名称
-            List<SysTag> sysTag = tagMapper.selectList(new LambdaQueryWrapper<SysTag>().eq(SysTag::getId,tagId));
+            List<SysTag> sysTag = tagMapper.selectList(new LambdaQueryWrapper<SysTag>().eq(SysTag::getId, tagId));
             sysTag.forEach(date -> {
                 //把文章查出来，放到list里面
                 List<SysArticle> sysArticleList = articleMapper.findArchivesByTags(date.getId());
@@ -213,4 +217,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, SysArticle> i
         }
         return archivesWithArticleList;
     }
+
+    @Override
+    public List<ArchivesWithArticle> findArchivesByCategorys(Long categoryId) {
+        List<ArchivesWithArticle> archivesWithArticleList = new ArrayList<ArchivesWithArticle>();
+        try {
+            //category的名称
+            List<SysCategory> sysCategoryList = categoryMapper.selectList(new LambdaQueryWrapper<SysCategory>().eq(SysCategory::getId, categoryId));
+            sysCategoryList.forEach(date -> {
+                //把文章查出来，放到list里面
+                List<SysArticle> sysArticleList = articleMapper.findArchivesByCategorys(date.getId());
+                ArchivesWithArticle archivesWithArticle = new ArchivesWithArticle(date.getName(), sysArticleList);
+                archivesWithArticleList.add(archivesWithArticle);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GlobalException(e.getMessage());
+        }
+        return archivesWithArticleList;
+    }
+
 }

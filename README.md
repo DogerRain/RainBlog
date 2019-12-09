@@ -1,4 +1,4 @@
-# Tumo Blog
+# Rain Blog
 
 ![](http://cdn.tycoding.cn/tumo.png)
 
