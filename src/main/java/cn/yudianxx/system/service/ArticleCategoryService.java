@@ -4,7 +4,7 @@ import cn.yudianxx.system.entity.ArticleCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/22
  */
 public interface ArticleCategoryService extends IService<ArticleCategory> {

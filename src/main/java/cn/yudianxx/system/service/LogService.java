@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import java.io.UnsupportedEncodingException;
 
 /**
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-03-13
  */
 public interface LogService extends IService<SysLog> {

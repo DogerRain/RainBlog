@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 文章信息实体
  *
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/16
  */
 @Data

@@ -3,7 +3,7 @@ package cn.yudianxx.common.constants;
 /**
  * 项目公共常量数据
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-09
  */
 public interface CommonConstant {

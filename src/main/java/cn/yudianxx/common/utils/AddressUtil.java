@@ -10,10 +10,7 @@ import java.io.*;
 import java.lang.reflect.Method;
 import java.net.URLDecoder;
 
-/**
- * @author tycoding
- * @date 2019-03-26
- */
+
 public class AddressUtil {
 
     /**

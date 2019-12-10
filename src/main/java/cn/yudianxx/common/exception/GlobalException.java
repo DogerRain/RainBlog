@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-03-09
  */
 public class GlobalException extends RuntimeException {

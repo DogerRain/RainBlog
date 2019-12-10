@@ -12,10 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author tycoding
- * @date 2019-03-26
- */
+
 @Data
 @ToString
 @TableName(value = "tb_log")

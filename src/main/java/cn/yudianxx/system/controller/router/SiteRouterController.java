@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * 博客前台路由控制层
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-10
  */
 @Controller

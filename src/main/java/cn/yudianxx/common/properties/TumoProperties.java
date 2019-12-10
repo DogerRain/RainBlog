@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * 配置文件
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-19
  */
 @Data

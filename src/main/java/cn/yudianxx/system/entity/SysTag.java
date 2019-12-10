@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/17
  */
 @Data

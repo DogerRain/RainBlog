@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 构建评论数据的Tree树
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-12
  */
 public class TreeUtil {

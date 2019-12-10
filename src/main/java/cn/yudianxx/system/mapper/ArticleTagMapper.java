@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/22
  */
 public interface ArticleTagMapper extends BaseMapper<ArticleTag> {

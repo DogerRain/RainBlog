@@ -9,10 +9,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Component;
 
-/**
- * @author TyCoding
- * @date 2018/10/21
- */
+
 @Component
 public class PasswordHelper {
 

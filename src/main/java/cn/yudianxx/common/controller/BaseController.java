@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Controller层公共方法提取
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-03-09
  */
 public class BaseController {

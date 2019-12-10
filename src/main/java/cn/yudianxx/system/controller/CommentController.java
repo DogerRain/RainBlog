@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/17
  */
 @RestController

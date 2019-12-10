@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 博客后台路由控制层
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-10
  */
 @Controller

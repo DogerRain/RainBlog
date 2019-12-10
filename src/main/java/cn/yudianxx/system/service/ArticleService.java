@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/16
  */
 public interface ArticleService extends IService<SysArticle> {

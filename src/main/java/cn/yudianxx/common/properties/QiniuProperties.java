@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 七牛云配置
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-19
  */
 @Data
