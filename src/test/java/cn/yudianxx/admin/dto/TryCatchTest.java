@@ -1,5 +1,6 @@
 package cn.yudianxx.admin.dto;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,12 +10,8 @@ import java.io.IOException;
  * @date 2019/12/2
  * @Description
  */
+@Slf4j
 public class TryCatchTest {
-    //完了完了我就说最近的头发怎么掉的有点多~
-//    昨晚夜深的时候，楼下断断续续传来砰砰砰的诡异声音。
-//      辗转反侧，做了个梦：
-//      梦里我和我自己说 写个代码，用While(true)循环对声音做个监听吧，响一次就计数，然后放到Redis里面。
-//        早上醒来，Redis里面的值是51。
     @Test
     public void test() throws Exception {
         try {
@@ -24,28 +21,26 @@ public class TryCatchTest {
             System.out.println("catch了test1()方法返回的异常");
             throw e;
         }
-
-
     }
 
     public int test1() throws Exception {
-        int count=0;
+        int count = 0;
         while (true) {
-
             try {
                 System.out.println("返回值：" + count()); //
-                return 1;//成功返回
-            } catch (IOException e){
-                System.out.println("catch了count()方法返回的异常1");
+                return count;
+            } catch (IOException e) {
+                System.out.println("catch了count()方法返回的异常1"); //捕捉到try的错误，而调用count()方法返回异常也会捕捉，再往上抛给调用test1()方法的父方法
                 throw e;
             } catch (Exception e) {
                 System.out.println("catch了count()方法返回的异常2");
                 throw e;
             } finally {
                 count++;
-                System.out.println(String.format("第%s次尝试了：",count));
+                System.out.println(String.format("第%s次尝试了：", count));
             }
         }
+
     }
 
     public int count() throws Exception {
@@ -53,8 +48,9 @@ public class TryCatchTest {
         try {
             a = 1 / 0;
         } catch (Exception e) {
-
-            throw new IllegalAccessException("计算异常了");
+            log.error("count()方法的计算异常了：{}", e);
+            e.printStackTrace();
+            throw new IllegalAccessException("计算异常了"); //Java抛出异常会直接返回，交给上一级方法处理
         } finally {
 //            System.out.println("1");
 //            return a ; //finall最后会覆盖catch的返回throw，导致上层调用没有捕捉到异常
