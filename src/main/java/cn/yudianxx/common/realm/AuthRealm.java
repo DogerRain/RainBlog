@@ -10,10 +10,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * @author TyCoding
- * @date 2018/10/21
- */
+
 public class AuthRealm extends AuthorizingRealm {
 
     @Autowired

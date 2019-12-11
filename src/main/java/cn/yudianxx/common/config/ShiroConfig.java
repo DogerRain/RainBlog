@@ -24,10 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * @author TyCoding
- * @date 2018/10/21
- */
+
 @Configuration
 public class ShiroConfig {
 

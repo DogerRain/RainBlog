@@ -3,7 +3,7 @@ package cn.yudianxx.common.properties;
 import lombok.Data;
 
 /**
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-20
  */
 @Data

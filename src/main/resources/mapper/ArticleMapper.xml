@@ -28,4 +28,9 @@
        SELECT ta.* FROM  tb_article ta LEFT JOIN tb_article_tag tat on	ta.id= tat.article_id
       WHERE tat.tag_id=#{tagId}
     </select>
+
+    <select id="findArchivesByCategorys" resultType="cn.yudianxx.system.entity.SysArticle">
+      SELECT ta.* FROM  tb_article ta LEFT JOIN tb_article_category tac on	ta.id= tac.article_id
+      WHERE tac.category_id=#{categoryId}
+    </select>
 </mapper>

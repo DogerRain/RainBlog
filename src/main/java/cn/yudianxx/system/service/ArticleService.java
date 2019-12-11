@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/16
  */
 public interface ArticleService extends IService<SysArticle> {
@@ -81,6 +81,12 @@ public interface ArticleService extends IService<SysArticle> {
      * @return
      */
     List<ArchivesWithArticle> findArchivesByTags(Long tagId);
+
+    /**
+     * 根据category标签归类
+     * @return
+     */
+    List<ArchivesWithArticle> findArchivesByCategorys(Long categoryId);
 
     /**
      * 添加

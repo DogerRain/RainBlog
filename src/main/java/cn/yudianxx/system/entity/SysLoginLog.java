@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-03-13
  */
 @TableName("tb_login_log")

@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-03-13
  */
 public interface LoginLogService extends IService<SysLoginLog> {

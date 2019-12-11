@@ -20,7 +20,9 @@
         <div id="post-content" class="post-content" itemprop="articleBody">
             <p class="post-tags">
                 <strong>分类：</strong>
-                <a th:each="tag : ${sysCategoryList}" style="background-color: #00a8c6">[[${tag.name}]]</a>
+                <a th:href="'/archives'" style="background-color: black">ALL</a>
+                <a th:each=" tag : ${sysCategoryList}" style="background-color: #00a8c6" th:href="'/archives?category='
+                + ${tag.id}">[[${tag.name}]]</a>
             </p>
             <p class="post-tags">
                 <strong>标签：</strong>

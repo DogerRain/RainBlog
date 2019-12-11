@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/22
  */
 public interface ArticleTagService extends IService<ArticleTag> {

@@ -5,7 +5,7 @@ import cn.yudianxx.system.entity.SysLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-03-13
  */
 public interface LogMapper extends BaseMapper<SysLog> {

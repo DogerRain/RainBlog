@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * 博客前台路由控制层
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-10
  */
 @Controller
@@ -163,15 +163,15 @@ public class SiteRouterController extends BaseController {
      * @return
      */
     @RequestMapping("/archives")
-    public String archives(Model model, @RequestParam(name = "tag", required = false) Long tagId) {
+    public String archives(Model model, @RequestParam(name = "tag", required = false) Long tagId, @RequestParam(name = "category", required = false) Long categoryId) {
         try {
             List<ArchivesWithArticle> list = new ArrayList<>();
             if (tagId != null) {
                 list = articleService.findArchivesByTags(tagId);
-
+            } else if (categoryId != null) {
+                list = articleService.findArchivesByCategorys(categoryId);
             } else {
                 list = articleService.findArchives();
-                model.addAttribute(SiteConstant.ARCHIVES_MODEL, list);
             }
             //把所有的category和tags都列出来：
             List<SysTag> sysTagList = tagService.findAll();

@@ -1,31 +1,19 @@
-# Tumo Blog
-
-![](http://cdn.tycoding.cn/tumo.png)
-
-Tumo Blog 是一个非常漂亮的博客系统，基于SpringBoot2.1.3 + LayUI。
-
-苦于技术太菜，之前的版本中，采用SpringBoot + Vue留下了许多坑，非常抱歉；
-
-花了几天时间对项目重构，前端采用全新的LayUI，相对于Vue，LayUI更适合前后端不分离的项目。
+# Rain Blog
 
 
+Rain Blog 是基于SpringBoot2.1.3 + LayUI 搭建的一个博客系统，是从[Tumo](https://github.com/TyCoding/tumo) fork 过来的项目，在原有的基础上增加了部分功能。
 
-演示站点: [http://tumo.tycoding.cn](http://tumo.tycoding.cn)
+移动端：
+![](http://forever.baimuxym.cn/20191211094455.jpg)
 
-后台入口：[http://tumo.tycoding.cn/login](http://tumo.tycoding.cn/login)
+PC端：
+![](http://forever.baimuxym.cn/20191210124914.png)
 
-[![License](https://img.shields.io/badge/SpringBoot-v2.1.3.RELEASE-green.svg)](https://github.com/TyCoding/tumo)
-[![License](https://img.shields.io/badge/Mysql-v5.7.22-blue.svg)](https://github.com/TyCoding/tumo)
 
-[快速开始](https://github.com/TyCoding/tumo/wiki/%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2Tumo-Blog)
+演示地址: [http://rainblog.baimuxym.cn/](http://rainblog.baimuxym.cn/)
 
-## Vue版本
+后台管理：[http://rainblog.baimuxym.cn/system](http://rainblog.baimuxym.cn/system)
 
-本博客也有基于Vue组件开发的前后端完全分离的版本，如果你已经熟悉的传统的SSM框架开发模式，或许你可以尝试一下前后端分离的开发模式，那么 [https://github.com/TyCoding/tumo-vue](https://github.com/TyCoding/tumo-vue)就是一个不错的选择。
-
-同时也欢迎大家借此项目进行二次开发。详细介绍请看：[https://github.com/TyCoding/tumo-vue](https://github.com/TyCoding/tumo-vue)
-
-如果大家喜欢、或是对大家的学习有所帮助，请点击右上角star、fork 给作者一些鼓励。
 
 ## 技术选型
 
@@ -34,20 +22,21 @@ Tumo Blog 是一个非常漂亮的博客系统，基于SpringBoot2.1.3 + LayUI�
 请按照以下流程运行项目：
 
 1. 检查自己本地的开发环境是否与我的一致
-2. 创建本地Mysql数据库：`tumo`，并导入项目目录下 `/db/db.sql`
+2. 创建本地Mysql数据库：`tumo`，并导入项目目录下 `/db/rainblog_test.sql`
 3. 保证Maven已经完全加载了项目所需的依赖
-4. 运行项目下的：`/src/main/java/cn/tycoding/TumoApplication.java`
-5. 默认用户名和密码：`username: tycoding;   passsword: 123456`
+4. 运行项目下的：`cn.yudianxx.RainblogApplication.java`
+5. 默认用户名和密码：`username: Rainer;   passsword: 123456`
 
 ### 后端
 
 * 基础框架：Spring Boot 2.1.3.RELEASE
 
-* 持久层框架：Mybatis 1.3.1
+* 持久层框架：Mybatis-plus 2.1.0
 
 * 安全框架：Shiro
 
 * 模板引擎：Thymeleaf 3.0.11.RELEASE
+
 
 ### 前端
 
@@ -63,12 +52,16 @@ Tumo Blog 是一个非常漂亮的博客系统，基于SpringBoot2.1.3 + LayUI�
 
 * 数据库： Mysql 5.7.24
 
+###部署
+* 设置了开发环境和生产两套环境，`application-dev.yml`和`application-pro.yml` 
+* 若要部署到服务器，需要选择profile节点进行打包，maven 命令：
+   ` clean install -Dmaven.test.skip=true -P pro`
+
 ## 联系我
 
-- [Blog@TyCoding's blog](http://www.tycoding.cn)
+- [CSDN:https://blog.csdn.net/yudianxiaoxiao](https://blog.csdn.net/yudianxiaoxiao)
 
-- [GitHub@TyCoding](https://github.com/TyCoding)
+- [GitHub:https://github.com/DogerRain](https://github.com/DogerRain)
 
-- [ZhiHu@TyCoding](https://www.zhihu.com/people/tomo-83-82/activities)
+- [知乎:https://www.zhihu.com/people/yu-dian-xiao-xiao-42](https://www.zhihu.com/people/yu-dian-xiao-xiao-42)
 
-- QQ Group: 671017003

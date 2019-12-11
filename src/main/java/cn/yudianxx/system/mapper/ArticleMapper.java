@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.util.List;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/16
  */
 public interface ArticleMapper extends BaseMapper<SysArticle> {
@@ -16,6 +16,8 @@ public interface ArticleMapper extends BaseMapper<SysArticle> {
     List<SysArticle> findArchivesByDate(String date);
 
     List<SysArticle> findArchivesByTags(Long tagId);
+
+    List<SysArticle> findArchivesByCategorys(Long categoryId);
 
 
 }

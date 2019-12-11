@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @author TyCoding
+ * @author huangyongwen
  * @date 2018/10/18
  */
 @RestController

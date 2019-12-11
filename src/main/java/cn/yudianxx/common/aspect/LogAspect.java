@@ -18,10 +18,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
-/**
- * @author tycoding
- * @date 2019-03-26
- */
+
 @Aspect
 @Component
 public class LogAspect {

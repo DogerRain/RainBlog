@@ -3,7 +3,7 @@ package cn.yudianxx.common.constants;
 /**
  * 博客前台模块公共常量值
  *
- * @author tycoding
+ * @author huangyongwen
  * @date 2019-09-11
  */
 public interface SiteConstant {
