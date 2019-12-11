@@ -160,7 +160,7 @@
                 if (res.code == 500) {
                     return admin.modal.error(res.msg);
                 }
-                $('#cover').attr('src', res.data.url)
+                $('#cover').attr('src', "http://"+res.data.url)
             }
         });
 

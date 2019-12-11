@@ -34,20 +34,23 @@ public class QiniuyunUploadTest {
     private UploadManager uploadManager = new UploadManager(new Configuration());
 
 //    String localFilePath = "F:\\qiniu\\unnamed.jpg";
-    String localFilePath = "F:\\qiniu\\1575031365174.jpg";
+    String localFilePath = "F:\\image.png";
 
     @Test
     public void test() {
-//        upload(localFilePath);
+        upload(localFilePath);
 //        download();
-        System.out.println(config.getBucketName());
-        System.out.println(config.getUrl());
+//        System.out.println(config.getBucketName());
+//        System.out.println(config.getUrl());
     }
 
     public String upload(String file) {
-        String accessKey = tumoProperties.getQiniu().getAk();
-        String secretKey = tumoProperties.getQiniu().getSk();
-        String bucket = tumoProperties.getQiniu().getBn();
+//        String accessKey = tumoProperties.getQiniu().getAk();
+//        String secretKey = tumoProperties.getQiniu().getSk();
+//        String bucket = tumoProperties.getQiniu().getBn();
+        String accessKey = config.getAccessKey();
+        String secretKey = config.getSecretKey();
+        String bucket = config.getBucketName();
         //如果是Windows情况下，格式是 D:\\qiniu\\test.png
 
         String key = "";

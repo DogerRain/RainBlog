@@ -1,5 +1,6 @@
 package cn.yudianxx.system.controller;
 
+import cn.yudianxx.common.config.QiniuyunConfig;
 import cn.yudianxx.common.constants.enums.CommonEnum;
 import cn.yudianxx.common.exception.GlobalException;
 import cn.yudianxx.common.properties.QiniuProperties;
@@ -59,6 +60,9 @@ public class QiNiuController {
     @Autowired
     private TumoProperties properties;
 
+    @Autowired
+    QiniuyunConfig config;
+
 //    @Autowired
 //    CommonService commonService;
 
@@ -92,7 +96,7 @@ public class QiNiuController {
             //构造一个带指定Zone对象的配置类
             Configuration cfg = new Configuration(Zone.zone0());
             //...其他参数参考类注释
-            Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
+            Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());
             BucketManager bucketManager = new BucketManager(auth, cfg);
             //文件名前缀
             String prefix = "";
@@ -101,13 +105,13 @@ public class QiNiuController {
             //指定目录分隔符，列出所有公共前缀（模拟列出目录效果）。缺省值为空字符串
             String delimiter = "";
             //列举空间文件列表
-            BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(qiniu.getBn(), prefix, limit, delimiter);
+            BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(config.getBucketName(), prefix, limit, delimiter);
             List<QiNiuEntity> list = new ArrayList<>();
             while (fileListIterator.hasNext()) {
                 //处理获取的file list结果
                 FileInfo[] items = fileListIterator.next();
                 for (FileInfo item : items) {
-                    QiNiuEntity qiNiuEntity = new QiNiuEntity(item.hash, item.key, item.mimeType, item.fsize, qiniu.getUrl().trim() + item.key);
+                    QiNiuEntity qiNiuEntity = new QiNiuEntity(item.hash, item.key, item.mimeType, item.fsize, config.getUrl().trim() + item.key);
                     list.add(qiNiuEntity);
                 }
             }
@@ -133,8 +137,8 @@ public class QiNiuController {
      */
     @RequestMapping("/upload")
     public R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        QiniuProperties qiniu = properties.getQiniu();
-        this.check(qiniu);
+//        QiniuProperties qiniu = properties.getQiniu();
+//        this.check(qiniu);
         if (!file.isEmpty()) {
             //上传文件路径
             String FilePath = "";
@@ -144,8 +148,8 @@ public class QiNiuController {
             try {
                 //将MutipartFile对象转换为File对象，相当于需要以本地作为缓冲区暂时储存文件
                 //获取文件在服务器的储存位置
-                File path = new File(ResourceUtils.getURL("classpath:").getPath());
-                File filePath = new File(path.getAbsolutePath(), "upload/");
+//                File path = new File(ResourceUtils.getURL("classpath:").getPath());
+                File filePath = new File(config.getFileUrl(), "upload/");
                 if (!filePath.exists() && !filePath.isDirectory()) {
                     log.info("目录不存在，创建目录===========>" + filePath);
                     filePath.mkdir();
@@ -162,20 +166,20 @@ public class QiNiuController {
                 ImageCompressUtils.googleImageCompress(localFile,FilePath);
                 log.info("新文件名称===========>{},压缩后文件大小：{}m",FilePath,localFile.length()/1024/1024);
                 //密钥配置
-                Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
+                Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());
                 //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
                 Zone z = Zone.autoZone();
                 Configuration c = new Configuration(z);
                 //创建上传对象
                 UploadManager uploadManager = new UploadManager(c);
                 //调用put方法上传
-                Response res = uploadManager.put(FilePath, key, auth.uploadToken(qiniu.getBn()));
+                Response res = uploadManager.put(FilePath, key, auth.uploadToken(config.getBucketName()));
                 //打印返回的信息
                 //res.bodyString() 返回数据格式： {"hash":"FlHXdiArTIzeNy94EOxzlCQC7pDS","key":"1074213185631420416.png"}
                 log.info("文件上传成功============>" + res.bodyString());
                 Map map = new HashMap<>();
                 map.put("name", key);
-                map.put("url", qiniu.getUrl() + key);
+                map.put("url", config.getUrl() + key);
 
                 if (localFile.exists()) {
                     localFile.delete(); //删除本地缓存的文件

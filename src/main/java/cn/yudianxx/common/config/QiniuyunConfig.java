@@ -7,9 +7,11 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class QiniuyunConfig {
+    @Value("${image.file.directory}")
+    String fileUrl;
     @Value("${qiniuyun.SecretKey}")
     String secretKey;
-    @Value("${qiniuyun.AccessKey")
+    @Value("${qiniuyun.AccessKey}")
     String accessKey;
     @Value("${qiniuyun.BucketName}")
     String bucketName;
