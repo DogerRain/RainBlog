@@ -29,6 +29,10 @@ spring:
   devtools:
     restart:
       enabled: true
+  thymeleaf:
+    #false 表示不使用缓存，改了页面会实时更新
+    cache: true
+
 # 打印sql
 logging:
   level:
