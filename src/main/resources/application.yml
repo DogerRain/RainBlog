@@ -1,5 +1,5 @@
 server:
-  port: 8840
+  port: 8848
   tomcat:
     uri-encoding: utf-8
 
@@ -10,18 +10,10 @@ spring:
   devtools:
     restart:
       enabled: true
-
-#以下都是默认的配置，类似于mvc项目的配置
-  mvc:
-    static-path-pattern: /**
-  resources:
-    static-locations: classpath:/static/
+  #thymeleaf模板引擎
   thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    cache: false #关闭缓存
-
-
+    #false 表示不使用缓存，改了页面会实时更新
+    cache: false
 
   #文件上传相关设置
   servlet:
@@ -36,4 +28,3 @@ mybatis-plus:
     jdbc-type-for-null: null
   global-config:
     banner: false
-
