@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class QiniuyunConfig {
     @Value("${image.file.directory}")
-    String fileUrl;
+    String uploadFileUrl;
     @Value("${qiniuyun.SecretKey}")
     String secretKey;
     @Value("${qiniuyun.AccessKey}")

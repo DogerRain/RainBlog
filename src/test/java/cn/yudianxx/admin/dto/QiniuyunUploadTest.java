@@ -12,6 +12,7 @@ import com.qiniu.util.Auth;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -31,6 +32,9 @@ public class QiniuyunUploadTest {
     @Autowired
     QiniuyunConfig config;
 
+    @Value("${spring.thymeleaf.cache}")
+    String cache;
+
     private UploadManager uploadManager = new UploadManager(new Configuration());
 
 //    String localFilePath = "F:\\qiniu\\unnamed.jpg";
@@ -38,7 +42,8 @@ public class QiniuyunUploadTest {
 
     @Test
     public void test() {
-        upload(localFilePath);
+        System.out.println(cache);
+//        upload(localFilePath);
 //        download();
 //        System.out.println(config.getBucketName());
 //        System.out.println(config.getUrl());

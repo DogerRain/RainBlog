@@ -61,13 +61,16 @@ public class QiNiuController {
     private TumoProperties properties;
 
     @Autowired
-    QiniuyunConfig config;
+    QiniuyunConfig qiniuyunConfig;
 
 //    @Autowired
 //    CommonService commonService;
 
-    private void check(QiniuProperties qiniu) {
-        if (StringUtils.isBlank(qiniu.getAk()) || StringUtils.isBlank(qiniu.getSk()) || StringUtils.isBlank(qiniu.getBn()) || StringUtils.isBlank(qiniu.getUrl())) {
+    private void check(QiniuyunConfig qiniuyunConfig) {
+        if (StringUtils.isBlank(qiniuyunConfig.getAccessKey())
+                || StringUtils.isBlank(qiniuyunConfig.getSecretKey())
+                || StringUtils.isBlank(qiniuyunConfig.getBucketName())
+                || StringUtils.isBlank(qiniuyunConfig.getUrl())) {
             throw new GlobalException("请先完善七牛云服务配置，再进行操作");
         }
     }
@@ -90,13 +93,12 @@ public class QiNiuController {
      */
     @GetMapping(value = "/list")
     public R list() {
-        QiniuProperties qiniu = properties.getQiniu();
-        this.check(qiniu);
+        this.check(qiniuyunConfig);
         try {
             //构造一个带指定Zone对象的配置类
             Configuration cfg = new Configuration(Zone.zone0());
             //...其他参数参考类注释
-            Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());
+            Auth auth = Auth.create(qiniuyunConfig.getAccessKey(), qiniuyunConfig.getSecretKey());
             BucketManager bucketManager = new BucketManager(auth, cfg);
             //文件名前缀
             String prefix = "";
@@ -105,13 +107,13 @@ public class QiNiuController {
             //指定目录分隔符，列出所有公共前缀（模拟列出目录效果）。缺省值为空字符串
             String delimiter = "";
             //列举空间文件列表
-            BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(config.getBucketName(), prefix, limit, delimiter);
+            BucketManager.FileListIterator fileListIterator = bucketManager.createFileListIterator(qiniuyunConfig.getBucketName(), prefix, limit, delimiter);
             List<QiNiuEntity> list = new ArrayList<>();
             while (fileListIterator.hasNext()) {
                 //处理获取的file list结果
                 FileInfo[] items = fileListIterator.next();
                 for (FileInfo item : items) {
-                    QiNiuEntity qiNiuEntity = new QiNiuEntity(item.hash, item.key, item.mimeType, item.fsize, config.getUrl().trim() + item.key);
+                    QiNiuEntity qiNiuEntity = new QiNiuEntity(item.hash, item.key, item.mimeType, item.fsize, qiniuyunConfig.getUrl().trim() + item.key);
                     list.add(qiNiuEntity);
                 }
             }
@@ -137,8 +139,7 @@ public class QiNiuController {
      */
     @RequestMapping("/upload")
     public R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-//        QiniuProperties qiniu = properties.getQiniu();
-//        this.check(qiniu);
+        this.check(qiniuyunConfig);
         if (!file.isEmpty()) {
             //上传文件路径
             String FilePath = "";
@@ -149,7 +150,7 @@ public class QiNiuController {
                 //将MutipartFile对象转换为File对象，相当于需要以本地作为缓冲区暂时储存文件
                 //获取文件在服务器的储存位置
 //                File path = new File(ResourceUtils.getURL("classpath:").getPath());
-                File filePath = new File(config.getFileUrl(), "upload/");
+                File filePath = new File(qiniuyunConfig.getUploadFileUrl(), "upload/");
                 if (!filePath.exists() && !filePath.isDirectory()) {
                     log.info("目录不存在，创建目录===========>" + filePath);
                     filePath.mkdir();
@@ -166,20 +167,20 @@ public class QiNiuController {
                 ImageCompressUtils.googleImageCompress(localFile,FilePath);
                 log.info("新文件名称===========>{},压缩后文件大小：{}m",FilePath,localFile.length()/1024/1024);
                 //密钥配置
-                Auth auth = Auth.create(config.getAccessKey(), config.getSecretKey());
+                Auth auth = Auth.create(qiniuyunConfig.getAccessKey(), qiniuyunConfig.getSecretKey());
                 //第二种方式: 自动识别要上传的空间(bucket)的存储区域是华东、华北、华南。
                 Zone z = Zone.autoZone();
                 Configuration c = new Configuration(z);
                 //创建上传对象
                 UploadManager uploadManager = new UploadManager(c);
                 //调用put方法上传
-                Response res = uploadManager.put(FilePath, key, auth.uploadToken(config.getBucketName()));
+                Response res = uploadManager.put(FilePath, key, auth.uploadToken(qiniuyunConfig.getBucketName()));
                 //打印返回的信息
                 //res.bodyString() 返回数据格式： {"hash":"FlHXdiArTIzeNy94EOxzlCQC7pDS","key":"1074213185631420416.png"}
                 log.info("文件上传成功============>" + res.bodyString());
                 Map map = new HashMap<>();
                 map.put("name", key);
-                map.put("url", config.getUrl() + key);
+                map.put("url", qiniuyunConfig.getUrl() + key);
 
                 if (localFile.exists()) {
                     localFile.delete(); //删除本地缓存的文件
@@ -202,11 +203,10 @@ public class QiNiuController {
      */
     @RequestMapping(value = "/download")
     public ResponseEntity<byte[]> download(@RequestParam("name") String name, HttpServletResponse response) {
-        QiniuProperties qiniu = properties.getQiniu();
-        this.check(qiniu);
+        this.check(qiniuyunConfig);
         try {
             String encodedFileName = URLEncoder.encode(name, "utf-8"); //获取文件名，防止乱码
-            String fileUrl = String.format("%s%s", qiniu.getUrl(), encodedFileName); //拼接得到文件的连接地址
+            String fileUrl = String.format("%s%s", qiniuyunConfig.getUrl(), encodedFileName); //拼接得到文件的连接地址
             //获取外部文件流
             URL url = new URL(fileUrl);
             //打开一个连接
@@ -246,14 +246,13 @@ public class QiNiuController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestParam("name") String name) {
-        QiniuProperties qiniu = properties.getQiniu();
-        this.check(qiniu);
+        this.check(qiniuyunConfig);
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone0());
-        Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
+        Auth auth = Auth.create(qiniuyunConfig.getAccessKey(), qiniuyunConfig.getSecretKey());
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
-            bucketManager.delete(qiniu.getBn(), name);
+            bucketManager.delete(qiniuyunConfig.getBucketName(), name);
             return new R();
         } catch (QiniuException e) {
             e.printStackTrace();
@@ -270,14 +269,13 @@ public class QiNiuController {
      */
     @GetMapping("/update")
     public R update(@RequestParam("oldname") String oldname, @RequestParam("newname") String newname) {
-        QiniuProperties qiniu = properties.getQiniu();
-        this.check(qiniu);
+        this.check(qiniuyunConfig);
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone0());
-        Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
+        Auth auth = Auth.create(qiniuyunConfig.getAccessKey(), qiniuyunConfig.getSecretKey());
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
-            bucketManager.move(qiniu.getBn(), oldname, qiniu.getBn(), newname);
+            bucketManager.move(qiniuyunConfig.getBucketName(), oldname, qiniuyunConfig.getBucketName(), newname);
             return new R();
         } catch (QiniuException e) {
             e.printStackTrace();
@@ -293,15 +291,14 @@ public class QiNiuController {
      */
     @GetMapping("/find")
     public R find(@RequestParam("name") String name) {
-        QiniuProperties qiniu = properties.getQiniu();
-        this.check(qiniu);
+        this.check(qiniuyunConfig);
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(Zone.zone0());
-        Auth auth = Auth.create(qiniu.getAk(), qiniu.getSk());
+        Auth auth = Auth.create(qiniuyunConfig.getAccessKey(), qiniuyunConfig.getSecretKey());
         BucketManager bucketManager = new BucketManager(auth, cfg);
         try {
-            FileInfo fileInfo = bucketManager.stat(qiniu.getBn(), name);
-            QiNiuEntity qiNiuEntity = new QiNiuEntity(fileInfo.hash, name, fileInfo.mimeType, fileInfo.fsize, qiniu.getUrl() + name);
+            FileInfo fileInfo = bucketManager.stat(qiniuyunConfig.getBucketName(), name);
+            QiNiuEntity qiNiuEntity = new QiNiuEntity(fileInfo.hash, name, fileInfo.mimeType, fileInfo.fsize, qiniuyunConfig.getUrl() + name);
             List<QiNiuEntity> list = new ArrayList<>();
             list.add(qiNiuEntity);
             return new R<>(list);
