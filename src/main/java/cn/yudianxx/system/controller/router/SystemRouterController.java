@@ -141,4 +141,9 @@ public class SystemRouterController {
     public String swagger() {
         return "swagger-ui.html";
     }
+
+    @RequestMapping("/test/uploadPicture")
+    public String uploadPicture() {
+        return "site/page/uploadPicture";
+    }
 }
